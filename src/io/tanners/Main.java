@@ -35,6 +35,7 @@ public class Main {
         mTaxWordsList.put(SalesTax.MEDICAL, FileProcessing.loadFileToList("Medical"));
 
         Scanner mInputScanner = null;
+
         try {
             mInputScanner = new Scanner(new File("Inputs"));
 
@@ -44,7 +45,7 @@ public class Main {
             {
                 String mLine = mInputScanner.nextLine();
                 System.out.println(mLine);
-                //SalesTaxData mData = mDataParser.parseFile(mLine);
+                SalesTaxData mData = mDataParser.parseFile(mLine);
 
                 //mDat
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 public class SalesTaxDataParser
 {
     private final String IMPORT_KEY_WORD = "imported";
+
     private HashMap<SalesTax, ArrayList<String>> mTaxWordsList;
 
     public SalesTaxDataParser(HashMap<SalesTax, ArrayList<String>> mTaxWordsList)
@@ -63,7 +64,6 @@ public class SalesTaxDataParser
 
         return false;
     }
-
 
 
     private int parseIntFromStr(String mNumber)

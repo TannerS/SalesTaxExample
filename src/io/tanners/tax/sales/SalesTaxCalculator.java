@@ -1,51 +1,37 @@
 package io.tanners.tax.sales;
 
+import io.tanners.tax.TaxCalculator;
+
 import java.util.ArrayList;
 
-public class SalesTaxCalculator {
+public class SalesTaxCalculator extends TaxCalculator<SalesTaxData> {
 
-    public double calculateTaxes(double mPrice, SalesTax mTax) throws ValueIsNegativeException, NullPointerException {
-        if (mTax == null)
+    @Override
+    public Double calculateTax(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
+        validationCheck(mTaxInfo);
+        return mTaxInfo.getmPrice() * mTaxInfo.getmTaxPercentage().getValue();
+    }
+
+    @Override
+    public Double calculateTotal(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
+        validationCheck(mTaxInfo);
+        return mTaxInfo.getmPrice() * (1.0 + mTaxInfo.getmTaxPercentage().getValue());
+    }
+
+    @Override
+    public ArrayList<Double> calculateTaxes(ArrayList<SalesTaxData> mTaxInfo) throws ValueIsNegativeException {
+        throw new UnsupportedOperationException("Must be implemented");
+    }
+
+    @Override
+    public ArrayList<Double> calculateTotals(ArrayList<SalesTaxData> mTaxInfo) throws ValueIsNegativeException {
+        throw new UnsupportedOperationException("Must be implemented");
+    }
+
+    private void validationCheck(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
+        if (mTaxInfo == null)
             throw new NullPointerException();
-        else if (mPrice < 0)
+        else if (mTaxInfo.getmPrice() < 0)
             throw new ValueIsNegativeException(ValueIsNegativeException.NEGATIVE);
-        else
-            return mPrice * (1.0 + mTax.getValue());
-    }
-
-    public ArrayList<Double> calculateTaxes(ArrayList<SalesTaxCalculatorWrapper> mTaxInfo) throws NullPointerException, ValueIsNegativeException {
-        ArrayList<Double> mTaxResults = new ArrayList<Double>();
-
-        for(SalesTaxCalculatorWrapper item : mTaxInfo)
-            mTaxResults.add(this.calculateTaxes(item.mPrice, item.mTax));
-
-        return mTaxResults;
-    }
-
-    public class SalesTaxCalculatorWrapper
-    {
-        private double mPrice;
-        private SalesTax mTax;
-
-        public SalesTaxCalculatorWrapper(double mPrice, SalesTax mTax) {
-            this.mPrice = mPrice;
-            this.mTax = mTax;
-        }
-
-        public double getmPrice() {
-            return mPrice;
-        }
-
-        public void setmPrice(double mPrice) {
-            this.mPrice = mPrice;
-        }
-
-        public SalesTax getmTax() {
-            return mTax;
-        }
-
-        public void setmTax(SalesTax mTax) {
-            this.mTax = mTax;
-        }
     }
 }

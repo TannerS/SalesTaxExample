@@ -1,27 +1,4 @@
 package io.tanners.tax.sales;
-
-import io.tanners.tax.Tax;
-
-//public class SalesTax extends Tax<SalesTax.SalesTaxValues> {
-//public class SalesTax extends Tax<SalesTax.SalesTaxValues> {
-
-//    @Override
-//    public SalesTaxValues getmValue() {
-//        return mValue;
-//    }
-//
-//    @Override
-//    public void setmValue(SalesTaxValues mValue) {
-//        // if the value is not null
-//        if(mValue != null)
-//            // set the class variable
-//            this.mValue = mValue;
-//        // value passed in is null
-//        else
-//            // throw a common exception
-//            throw new NullPointerException();
-//    }
-
     /**
      *
      * Using a common enum can ensure the the data passed into the above methods
