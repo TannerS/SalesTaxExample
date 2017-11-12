@@ -1,4 +1,7 @@
 package io.tanners.tax.sales;
+
+import java.math.BigDecimal;
+
 /**
  *
  * Using a common enum can ensure the the data passed into the above methods
@@ -15,45 +18,28 @@ package io.tanners.tax.sales;
  */
 public enum SalesTax {
     // each is valued at it's tax amount
-    BOOKS(0),
-    FOOD(0),
-    MEDICAL(0),
-    OTHER(.10),
+    BOOKS(new BigDecimal(0)),
+    FOOD(new BigDecimal(0)),
+    MEDICAL(new BigDecimal(0)),
+    OTHER(new BigDecimal(.10)),
     // fix for the fact editing the enum in code
     // changes the value for object itself
     // not just one instance of it
-    BOOKS_IMPORTED(.05),
-    FOOD_IMPORTED(.05),
-    MEDICAL_IMPORTED(.05),
-    OTHER_IMPORTED(.15);
+    BOOKS_IMPORTED(new BigDecimal(.05)),
+    FOOD_IMPORTED(new BigDecimal(.05)),
+    MEDICAL_IMPORTED(new BigDecimal(.05)),
+    OTHER_IMPORTED(new BigDecimal(.15));
 
     // actual variable holding amount
-    private double mTaxAmount;
+    private BigDecimal mTaxAmount;
     // constructor
-    SalesTax(double mTaxAmount) {
+    SalesTax(BigDecimal mTaxAmount) {
         // assuming this is never negative by programmer
         this.mTaxAmount = mTaxAmount;
     }
 
-//    public void setValue(Double mValue)
-//    {
-//        mTaxAmount = mValue;
-//    }
-
-    public double getValue()
+    public BigDecimal getValue()
     {
         return mTaxAmount;
     }
-
-
-////    public void add(double mTaxValueX, double mTaxValueY) {
-//    public SalesTax add(SalesTax mTaxValue) {
-////        SalesTax.IMPORTED.getValue() + mTaxValue.getValue();
-////        return SalesTax(this.mTaxAmount + mTaxValue.getValue());
-//        System.out.println("TESTTTTT:" + this.getValue());
-//        System.out.println("TESTTTTT:" + this.getValue());
-//        mTaxValue.setValue(mTaxValue.getValue() + this.mTaxAmount);
-//        return mTaxValue;
-////        mTaxAmount = mTaxValueX + mTaxValueY;
-//    }
 }

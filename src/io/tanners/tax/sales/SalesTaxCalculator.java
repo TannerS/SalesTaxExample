@@ -3,39 +3,39 @@ package io.tanners.tax.sales;
 import io.tanners.tax.TaxCalculator;
 import io.tanners.tax.exception.ValueIsNegativeException;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 
 public class SalesTaxCalculator extends TaxCalculator<SalesTaxData>{
 
     @Override
-    public Double calculateTax(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
+    public BigDecimal calculateTax(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
         validationCheck(mTaxInfo);
-        return mTaxInfo.getmPrice() * mTaxInfo.getmTaxPercentage().getValue() * mTaxInfo.getmQuantity();
+        return (mTaxInfo.getmPrice().multiply(mTaxInfo.getmTaxPercentage().getValue())).multiply(BigDecimal.valueOf(mTaxInfo.getmQuantity()));
     }
 
     @Override
-    public Double calculateTotal(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
+    public BigDecimal calculateTotal(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
         validationCheck(mTaxInfo);
-        return mTaxInfo.getmPrice() * (1.0 + mTaxInfo.getmTaxPercentage().getValue() * mTaxInfo.getmQuantity());
+        return mTaxInfo.getmTaxPercentage().getValue().add(new BigDecimal(1.0)).multiply(new BigDecimal(mTaxInfo.getmQuantity())).multiply(mTaxInfo.getmPrice());
     }
 
     @Override
-    public Double calculateTaxes(SalesTaxData[] mTaxInfo) throws ValueIsNegativeException {
-        double mTaxesTotal = 0.0;
+    public BigDecimal calculateTaxes(SalesTaxData[] mTaxInfo) throws ValueIsNegativeException {
+        BigDecimal mTaxesTotal = new BigDecimal(0.0);
 
         for(SalesTaxData mData : mTaxInfo) {
-            mTaxesTotal += calculateTax(mData);
+            mTaxesTotal = mTaxesTotal.add(calculateTax(mData));
         }
 
         return mTaxesTotal;
     }
 
     @Override
-    public Double calculateTotals(SalesTaxData[] mTaxInfo) throws ValueIsNegativeException {
-        double mTotal = 0.0;
+    public BigDecimal calculateTotals(SalesTaxData[] mTaxInfo) throws ValueIsNegativeException {
+        BigDecimal mTotal = new BigDecimal(0.0);
 
         for(SalesTaxData mData : mTaxInfo) {
-            mTotal += calculateTotal(mData);
+            mTotal = mTotal.add(calculateTotal(mData));
         }
 
         return mTotal;
@@ -44,7 +44,7 @@ public class SalesTaxCalculator extends TaxCalculator<SalesTaxData>{
     private void validationCheck(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
         if (mTaxInfo == null)
             throw new NullPointerException();
-        else if (mTaxInfo.getmPrice() < 0)
+        else if (mTaxInfo.getmPrice().doubleValue() < 0)
             throw new ValueIsNegativeException(ValueIsNegativeException.NEGATIVE);
     }
 }

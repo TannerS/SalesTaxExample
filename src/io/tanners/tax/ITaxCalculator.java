@@ -2,6 +2,7 @@ package io.tanners.tax;
 
 import io.tanners.tax.exception.ValueIsNegativeException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public interface ITaxCalculator <T extends TaxData>{
@@ -11,7 +12,7 @@ public interface ITaxCalculator <T extends TaxData>{
      * @return
      * @throws ValueIsNegativeException
      */
-    public Double calculateTax(T mTaxInfo) throws ValueIsNegativeException;
+    public BigDecimal calculateTax(T mTaxInfo) throws ValueIsNegativeException;
 
     /**
      * takes in a object that is used to calculate the total price with taxes
@@ -19,7 +20,7 @@ public interface ITaxCalculator <T extends TaxData>{
      * @return
      * @throws ValueIsNegativeException
      */
-    public Double calculateTotal(T mTaxInfo) throws ValueIsNegativeException;
+    public BigDecimal calculateTotal(T mTaxInfo) throws ValueIsNegativeException;
 
     /**
      * takes in a list of objects that is used to calculate the tax
@@ -29,7 +30,7 @@ public interface ITaxCalculator <T extends TaxData>{
      */
 //    public ArrayList<Double> calculateTaxes(ArrayList<T> mTaxInfo) throws ValueIsNegativeException;
 //    public Double calculateTaxes(ArrayList<T> mTaxInfo) throws ValueIsNegativeException;
-    public Double calculateTaxes(T[] mTaxInfo) throws ValueIsNegativeException;
+    public BigDecimal calculateTaxes(T[] mTaxInfo) throws ValueIsNegativeException;
 
     /**
      * takes in a list of objects that is used to calculate the total price with taxes
@@ -39,5 +40,5 @@ public interface ITaxCalculator <T extends TaxData>{
      */
 //    public ArrayList<Double> calculateTotals(ArrayList<T> mTaxInfo) throws ValueIsNegativeException;
 //    public Double calculateTotals(ArrayList<T> mTaxInfo) throws ValueIsNegativeException;
-    public Double calculateTotals(T[] mTaxInfo) throws ValueIsNegativeException;
+    public BigDecimal calculateTotals(T[] mTaxInfo) throws ValueIsNegativeException;
 }

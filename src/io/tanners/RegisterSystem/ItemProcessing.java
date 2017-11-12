@@ -8,6 +8,9 @@ import io.tanners.tax.exception.ArrayEmptyException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -100,36 +103,16 @@ public class ItemProcessing extends Processing
                 // is the base 10%, so here we work with that
                 // check if item is imported
                 if(mData.isImported())
-                {
-
-
                     mData.setmTaxPercentage(getImportedType(key));
-
-
-//                    System.out.println("ITEM|TAX|PRICE: " + mData.getmItem() + " " + mData.getmTaxPercentage().getValue() + " " + mData.getmPrice());
-//                    System.out.println("********END**********");
-
-                }
                 else
-                {
-
-                    // set key, which is the tax enum object, to the percentage value
                     mData.setmTaxPercentage(key);
-
-//                    System.out.println("DEBUG 2: " + mData.getmItem() + " " + mData.getmTaxPercentage().getValue() + " " + mData.getmPrice());
-
-                }
-
-
                 // end loop
                 break;
-
-
             }
         }
         try {
             // set price of item
-            mData.setmPrice(Double.parseDouble(mParsedResults[mParsedResults.length-1]));
+            mData.setmPrice(formatDecimalInput(new BigDecimal(Double.parseDouble(mParsedResults[mParsedResults.length-1]))));
         } catch (ValueIsNegativeException e) {
             e.printStackTrace();
             return null;
@@ -163,6 +146,14 @@ public class ItemProcessing extends Processing
         }
 
 //        return null;
+    }
+
+    private BigDecimal formatDecimalInput(BigDecimal mInput)
+    {
+        DecimalFormat mFormat = new DecimalFormat("#######.##");
+        mFormat.setRoundingMode(RoundingMode.HALF_UP);
+//        return mFormat.format(mInput);
+        return new BigDecimal(mFormat.format(mInput));
     }
 
 

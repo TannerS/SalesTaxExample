@@ -3,13 +3,19 @@ package io.tanners.tax.sales;
 import io.tanners.tax.TaxData;
 import io.tanners.tax.exception.ValueIsNegativeException;
 
+import java.math.BigDecimal;
+
 /**
  * Data class to hold the information about an item with it's tax information for later use
  */
 public class SalesTaxData extends TaxData
 {
-    protected boolean mIsImported;
+    private boolean mIsImported;
     private SalesTax mTaxPercentage;
+    private BigDecimal mTaxedAmount;
+
+    public SalesTaxData() {
+    }
 
     public boolean isImported() {
         return mIsImported;
@@ -54,15 +60,23 @@ public class SalesTaxData extends TaxData
     }
 
     @Override
-    public double getmPrice() {
+    public BigDecimal getmPrice() {
         return mPrice;
     }
 
     @Override
-    public void setmPrice(double mPrice) throws ValueIsNegativeException {
-        if(mPrice < 0)
+    public void setmPrice(BigDecimal mPrice) throws ValueIsNegativeException {
+        if(mPrice.doubleValue() < 0)
             throw new ValueIsNegativeException(ValueIsNegativeException.NEGATIVE);
         else
             this.mPrice = mPrice;
+    }
+
+    public BigDecimal getmTaxedAmount() {
+        return mTaxedAmount;
+    }
+
+    public void setmTaxedAmount(BigDecimal mTaxedAmount) {
+        this.mTaxedAmount = mTaxedAmount;
     }
 }

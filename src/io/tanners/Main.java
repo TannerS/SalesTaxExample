@@ -2,6 +2,7 @@ package io.tanners;
 
 import io.tanners.RegisterSystem.ItemProcessing;
 import io.tanners.RegisterSystem.Order;
+import io.tanners.RegisterSystem.Printout;
 import io.tanners.tax.TaxCalculator;
 import io.tanners.tax.TaxData;
 import io.tanners.tax.exception.ValueIsNegativeException;
@@ -20,41 +21,34 @@ public class Main {
         Scanner mInputScanner = null;
         ArrayList<TaxData> mCurrentOrderValues = new  ArrayList<TaxData>();
         Order mCurrentOrder = null;
+        Printout mPrint = null;
 
         try {
             mInputScanner = new Scanner(new File("Inputs"));
-            TaxCalculator<SalesTaxData> mCalculator = new SalesTaxCalculator();
-
 
             while(mInputScanner.hasNext())
             {
                 String mLine = mInputScanner.nextLine();
-//            System.out.println(mLine);
 
                 if(mLine.length() <= 0) {
                     mCurrentOrder = new Order(mCurrentOrderValues);
-                    System.out.println("Sales Taxes: " + mCurrentOrder.calculateTaxes());
-                    System.out.println("Total: " + mCurrentOrder.calculateTotal());
+                    mPrint = new Printout(mCurrentOrder);
+                    System.out.println(mPrint.displayReceipt());
                     mCurrentOrderValues = new ArrayList<TaxData>();
                 }
                 else {
                     SalesTaxData mData = (SalesTaxData) mProcessor.parseData(mLine);
                     mCurrentOrderValues.add(mData);
-                    System.out.println(mData.getmQuantity() + " " + mData.getmItem() + " at " + mCalculator.calculateTotal(mData));
                 }
             }
 
             mCurrentOrder = new Order(mCurrentOrderValues);
-            System.out.println("Sales Taxes: " + mCurrentOrder.calculateTaxes());
-            System.out.println("Total: " + mCurrentOrder.calculateTotal());
+            mPrint = new Printout(mCurrentOrder);
+            System.out.println(mPrint.displayReceipt());
 
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (ValueIsNegativeException e) {
-            e.printStackTrace();
         }
-
-
     }
 }
