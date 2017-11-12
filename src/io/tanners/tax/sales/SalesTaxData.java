@@ -10,12 +10,13 @@ import java.math.BigDecimal;
  */
 public class SalesTaxData extends TaxData
 {
+    // if it is imported
     private boolean mIsImported;
+    // tax bracket
     private SalesTax mTaxPercentage;
+    // total tax amount
     private BigDecimal mTaxedAmount;
 
-    public SalesTaxData() {
-    }
 
     public boolean isImported() {
         return mIsImported;

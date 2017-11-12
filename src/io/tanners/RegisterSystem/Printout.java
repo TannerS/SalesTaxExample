@@ -15,33 +15,27 @@ public class Printout {
         this.mOrder = mOrder;
     }
 
-    public BigDecimal formatValues(BigDecimal mInput)
-    {
-
-        return mInput;
-
-    }
-
-
+    /**
+     * display the receipt of items with custom formatting
+     * @return
+     */
     public String displayReceipt()
     {
-        ArrayList<TaxData> orderItems = this.mOrder.getOrderItems();
+        // create iterator onject
         Order.OrderIterator itr = (Order.OrderIterator) mOrder.iterator();
         StringBuilder mBuilder = new StringBuilder();
-
+        // iterate items
         while(itr.hasNext())
         {
+            // get item
             SalesTaxData mTempData = (SalesTaxData) itr.next();
-
+            // create message
             mBuilder.append(mTempData.getmQuantity()).append(" ").append(mTempData.getmItem()).append(" at ").append(((mTempData).getmTaxedAmount())).append("\n\r");
         }
-
-        mBuilder.append("Sales Taxes: ").append((formatValues(this.mOrder.calculateTaxes())));
-        mBuilder.append("\n\rTotal: ").append((formatValues(this.mOrder.calculateTotal()))).append("\n\r");
-
+        // create rest of message
+        mBuilder.append("Sales Taxes: ").append((this.mOrder.calculateTaxes()));
+        mBuilder.append("\n\rTotal: ").append((this.mOrder.calculateTotal())).append("\n\r");
+        // return output string
         return mBuilder.toString();
-
     }
-
-
 }

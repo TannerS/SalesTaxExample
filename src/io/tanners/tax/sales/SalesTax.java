@@ -29,7 +29,6 @@ public enum SalesTax {
     FOOD_IMPORTED(new BigDecimal(.05)),
     MEDICAL_IMPORTED(new BigDecimal(.05)),
     OTHER_IMPORTED(new BigDecimal(.15));
-
     // actual variable holding amount
     private BigDecimal mTaxAmount;
     // constructor
@@ -38,6 +37,10 @@ public enum SalesTax {
         this.mTaxAmount = mTaxAmount;
     }
 
+    /**
+     * get enum value
+     * @return
+     */
     public BigDecimal getValue()
     {
         return mTaxAmount;

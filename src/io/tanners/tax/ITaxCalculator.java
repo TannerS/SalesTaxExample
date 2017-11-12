@@ -28,8 +28,6 @@ public interface ITaxCalculator <T extends TaxData>{
      * @return
      * @throws ValueIsNegativeException
      */
-//    public ArrayList<Double> calculateTaxes(ArrayList<T> mTaxInfo) throws ValueIsNegativeException;
-//    public Double calculateTaxes(ArrayList<T> mTaxInfo) throws ValueIsNegativeException;
     public BigDecimal calculateTaxes(T[] mTaxInfo) throws ValueIsNegativeException;
 
     /**
@@ -38,7 +36,5 @@ public interface ITaxCalculator <T extends TaxData>{
      * @return
      * @throws ValueIsNegativeException
      */
-//    public ArrayList<Double> calculateTotals(ArrayList<T> mTaxInfo) throws ValueIsNegativeException;
-//    public Double calculateTotals(ArrayList<T> mTaxInfo) throws ValueIsNegativeException;
     public BigDecimal calculateTotals(T[] mTaxInfo) throws ValueIsNegativeException;
 }

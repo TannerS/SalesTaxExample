@@ -5,7 +5,7 @@ import io.tanners.tax.exception.ValueIsNegativeException;
 import java.math.BigDecimal;
 
 /**
- * Data class to hold the information about an item with it's tax information for later use
+ * abstract data class to hold the information about an item with it's tax information for later use
  */
 public abstract class TaxData
 {

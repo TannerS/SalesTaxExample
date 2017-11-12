@@ -14,17 +14,23 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 
+/**
+ * Pre-processing the data
+ */
 public class ItemProcessing extends Processing
 {
+    // hashmap to hold the tax value along with list of items to look for
     private HashMap<SalesTax, ArrayList<String>> mTaxableItems;
+    // key word used to find improted workds
     private final String IMPORT_KEY_WORD = "imported";
 
     /**
-     *
+     * constructor
      */
     public ItemProcessing() {
+        // init hashmap
         mTaxableItems = new HashMap<SalesTax, ArrayList<String>>();
-
+        // read in files and the matching tax bracket
         mTaxableItems.put(SalesTax.FOOD, loadItemsIntoList("FoodItems"));
         mTaxableItems.put(SalesTax.BOOKS, loadItemsIntoList("BookItems"));
         mTaxableItems.put(SalesTax.MEDICAL, loadItemsIntoList("MedicalItems"));
@@ -71,7 +77,6 @@ public class ItemProcessing extends Processing
         mInput = mInput.trim();
         // split by spaces, as per input guidlines
         String[] mParsedResults = mInput.split(" ");
-
         // get quantity of item
         try {
             mData.setmQuantity(parseIntFromStr(mParsedResults[0]));
@@ -115,22 +120,20 @@ public class ItemProcessing extends Processing
             e.printStackTrace();
             return null;
         }
-
+        // return parsed data
         return mData;
     }
 
 
     /**
      * This including the added enum values were for a work around
-     * where modifying the enum value to add the improt tax value
+     * where modifying the enum value to add the import tax value
      * modified it for all enums of this type vs that one single copy.
      * @param mTax
      * @return
      */
-    private SalesTax getImportedType(SalesTax mTax)
-    {
-        switch(mTax)
-        {
+    private SalesTax getImportedType(SalesTax mTax) {
+        switch (mTax) {
             case BOOKS:
                 return SalesTax.BOOKS_IMPORTED;
             case FOOD:
@@ -142,33 +145,7 @@ public class ItemProcessing extends Processing
             default:
                 return null;
         }
-
-//        return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//            if (matchesCategoryWord(mItem, mTaxableItems.get(key))) {
-
-
-
-
 
     /**
      * Checks if line of data contains a possible keyword to tell what kind of tax to apply
