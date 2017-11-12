@@ -9,8 +9,6 @@ import io.tanners.tax.exception.ArrayEmptyException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -112,7 +110,7 @@ public class ItemProcessing extends Processing
         }
         try {
             // set price of item
-            mData.setmPrice(formatDecimalInput(new BigDecimal(Double.parseDouble(mParsedResults[mParsedResults.length-1]))));
+            mData.setmPrice(new BigDecimal(Double.parseDouble(mParsedResults[mParsedResults.length-1])));
         } catch (ValueIsNegativeException e) {
             e.printStackTrace();
             return null;
@@ -146,14 +144,6 @@ public class ItemProcessing extends Processing
         }
 
 //        return null;
-    }
-
-    private BigDecimal formatDecimalInput(BigDecimal mInput)
-    {
-        DecimalFormat mFormat = new DecimalFormat("#######.##");
-        mFormat.setRoundingMode(RoundingMode.HALF_UP);
-//        return mFormat.format(mInput);
-        return new BigDecimal(mFormat.format(mInput));
     }
 
 

@@ -4,19 +4,21 @@ import io.tanners.tax.TaxCalculator;
 import io.tanners.tax.exception.ValueIsNegativeException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class SalesTaxCalculator extends TaxCalculator<SalesTaxData>{
 
     @Override
     public BigDecimal calculateTax(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
         validationCheck(mTaxInfo);
-        return (mTaxInfo.getmPrice().multiply(mTaxInfo.getmTaxPercentage().getValue())).multiply(BigDecimal.valueOf(mTaxInfo.getmQuantity()));
+        return formatDecimalInput((mTaxInfo.getmPrice().multiply(mTaxInfo.getmTaxPercentage().getValue())).multiply(BigDecimal.valueOf(mTaxInfo.getmQuantity())));
     }
 
     @Override
     public BigDecimal calculateTotal(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
         validationCheck(mTaxInfo);
-        return mTaxInfo.getmTaxPercentage().getValue().add(new BigDecimal(1.0)).multiply(new BigDecimal(mTaxInfo.getmQuantity())).multiply(mTaxInfo.getmPrice());
+        return formatDecimalInput(mTaxInfo.getmTaxPercentage().getValue().add(new BigDecimal(1.0)).multiply(new BigDecimal(mTaxInfo.getmQuantity())).multiply(mTaxInfo.getmPrice()));
     }
 
     @Override
@@ -27,7 +29,7 @@ public class SalesTaxCalculator extends TaxCalculator<SalesTaxData>{
             mTaxesTotal = mTaxesTotal.add(calculateTax(mData));
         }
 
-        return mTaxesTotal;
+        return formatDecimalInput(mTaxesTotal);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class SalesTaxCalculator extends TaxCalculator<SalesTaxData>{
             mTotal = mTotal.add(calculateTotal(mData));
         }
 
-        return mTotal;
+        return formatDecimalInput(mTotal);
     }
 
     private void validationCheck(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
@@ -47,4 +49,14 @@ public class SalesTaxCalculator extends TaxCalculator<SalesTaxData>{
         else if (mTaxInfo.getmPrice().doubleValue() < 0)
             throw new ValueIsNegativeException(ValueIsNegativeException.NEGATIVE);
     }
+
+    private BigDecimal formatDecimalInput(BigDecimal mInput)
+    {
+        DecimalFormat mFormat = new DecimalFormat("#######.###");
+        mFormat.setRoundingMode(RoundingMode.HALF_UP);
+//        return mFormat.format(mInput);
+        return new BigDecimal(mFormat.format(mInput));
+    }
+
+
 }
