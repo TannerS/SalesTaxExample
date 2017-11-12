@@ -19,16 +19,41 @@ public enum SalesTax {
     FOOD(0),
     MEDICAL(0),
     OTHER(.10),
-    IMPORTED(OTHER.mTaxAmount + .05);
+    // fix for the fact editing the enum in code
+    // changes the value for object itself
+    // not just one instance of it
+    BOOKS_IMPORTED(.05),
+    FOOD_IMPORTED(.05),
+    MEDICAL_IMPORTED(.05),
+    OTHER_IMPORTED(.15);
+
     // actual variable holding amount
-    private final double mTaxAmount;
+    private double mTaxAmount;
     // constructor
     SalesTax(double mTaxAmount) {
         // assuming this is never negative by programmer
         this.mTaxAmount = mTaxAmount;
     }
+
+//    public void setValue(Double mValue)
+//    {
+//        mTaxAmount = mValue;
+//    }
+
     public double getValue()
     {
         return mTaxAmount;
     }
+
+
+////    public void add(double mTaxValueX, double mTaxValueY) {
+//    public SalesTax add(SalesTax mTaxValue) {
+////        SalesTax.IMPORTED.getValue() + mTaxValue.getValue();
+////        return SalesTax(this.mTaxAmount + mTaxValue.getValue());
+//        System.out.println("TESTTTTT:" + this.getValue());
+//        System.out.println("TESTTTTT:" + this.getValue());
+//        mTaxValue.setValue(mTaxValue.getValue() + this.mTaxAmount);
+//        return mTaxValue;
+////        mTaxAmount = mTaxValueX + mTaxValueY;
+//    }
 }

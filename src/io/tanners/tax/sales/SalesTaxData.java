@@ -11,11 +11,11 @@ public class SalesTaxData extends TaxData
     protected boolean mIsImported;
     private SalesTax mTaxPercentage;
 
-    public boolean ismIsImported() {
+    public boolean isImported() {
         return mIsImported;
     }
 
-    public void setmIsImported(boolean mIsImported) {
+    public void setisImported(boolean mIsImported) {
         this.mIsImported = mIsImported;
     }
 

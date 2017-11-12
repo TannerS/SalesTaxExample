@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 
-public class ItemProcessing extends ItemProcessingBase
+public class ItemProcessing extends Processing
 {
     private HashMap<SalesTax, ArrayList<String>> mTaxableItems;
     private final String IMPORT_KEY_WORD = "imported";
@@ -71,10 +71,6 @@ public class ItemProcessing extends ItemProcessingBase
         // split by spaces, as per input guidlines
         String[] mParsedResults = mInput.split(" ");
 
-
-   //     System.out.println(mParsedResults[0]);
-
-
         // get quantity of item
         try {
             mData.setmQuantity(parseIntFromStr(mParsedResults[0]));
@@ -86,7 +82,7 @@ public class ItemProcessing extends ItemProcessingBase
         // where the { } is what is returned
         String mItem = null;
         try {
-            mItem = concatenateString(mParsedResults, 1,mParsedResults.length-3);
+            mItem = concatenateString(mParsedResults, 1,mParsedResults.length-2);
         } catch (ArrayEmptyException e) {
             e.printStackTrace();
             return null;
@@ -95,20 +91,42 @@ public class ItemProcessing extends ItemProcessingBase
         mData.setmItem(mItem);
         //check if item is imported
         if(checkImported(mItem))
-            mData.setmIsImported(true);
-
-
+            mData.setisImported(true);
         // loop possible words to determine the tax type
         for (SalesTax key : mTaxableItems.keySet()) {
             // if line of data has word that shows which tax info it may be
             if (matchesCategoryWord(mItem, mTaxableItems.get(key))) {
-                // set key, which is the tax enum object, to the percentage value
-                mData.setmTaxPercentage(key);
+                // since this example, the only thing that can add on to an import tax
+                // is the base 10%, so here we work with that
+                // check if item is imported
+                if(mData.isImported())
+                {
+
+
+                    mData.setmTaxPercentage(getImportedType(key));
+
+
+//                    System.out.println("ITEM|TAX|PRICE: " + mData.getmItem() + " " + mData.getmTaxPercentage().getValue() + " " + mData.getmPrice());
+//                    System.out.println("********END**********");
+
+                }
+                else
+                {
+
+                    // set key, which is the tax enum object, to the percentage value
+                    mData.setmTaxPercentage(key);
+
+//                    System.out.println("DEBUG 2: " + mData.getmItem() + " " + mData.getmTaxPercentage().getValue() + " " + mData.getmPrice());
+
+                }
+
+
                 // end loop
                 break;
+
+
             }
         }
-
         try {
             // set price of item
             mData.setmPrice(Double.parseDouble(mParsedResults[mParsedResults.length-1]));
@@ -118,6 +136,33 @@ public class ItemProcessing extends ItemProcessingBase
         }
 
         return mData;
+    }
+
+
+    /**
+     * This including the added enum values were for a work around
+     * where modifying the enum value to add the improt tax value
+     * modified it for all enums of this type vs that one single copy.
+     * @param mTax
+     * @return
+     */
+    private SalesTax getImportedType(SalesTax mTax)
+    {
+        switch(mTax)
+        {
+            case BOOKS:
+                return SalesTax.BOOKS_IMPORTED;
+            case FOOD:
+                return SalesTax.FOOD_IMPORTED;
+            case MEDICAL:
+                return SalesTax.MEDICAL_IMPORTED;
+            case OTHER:
+                return SalesTax.OTHER_IMPORTED;
+            default:
+                return null;
+        }
+
+//        return null;
     }
 
 
@@ -138,6 +183,7 @@ public class ItemProcessing extends ItemProcessingBase
 
 
 
+//            if (matchesCategoryWord(mItem, mTaxableItems.get(key))) {
 
 
 
