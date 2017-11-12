@@ -70,6 +70,11 @@ public class ItemProcessing extends ItemProcessingBase
         mInput = mInput.trim();
         // split by spaces, as per input guidlines
         String[] mParsedResults = mInput.split(" ");
+
+
+   //     System.out.println(mParsedResults[0]);
+
+
         // get quantity of item
         try {
             mData.setmQuantity(parseIntFromStr(mParsedResults[0]));
@@ -173,6 +178,7 @@ public class ItemProcessing extends ItemProcessingBase
         }
         catch(NumberFormatException ex)
         {
+            ex.printStackTrace();
             // safe default return for error
             return -1;
         }

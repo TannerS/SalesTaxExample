@@ -1,8 +1,4 @@
 package io.tanners.tax;
-
-import io.tanners.tax.exception.ValueIsNegativeException;
-
-import java.util.ArrayList;
 /**
  *
  * The parent class that will be used to defined a common behavior.
@@ -11,5 +7,4 @@ import java.util.ArrayList;
  * and is an example of what we can do with
  *
  */
-public abstract class TaxCalculator<T> implements ITaxCalculator<T>{
-}
+public abstract class TaxCalculator<T extends TaxData> implements ITaxCalculator<T>{ }

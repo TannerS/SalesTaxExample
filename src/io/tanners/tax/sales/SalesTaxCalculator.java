@@ -1,34 +1,44 @@
 package io.tanners.tax.sales;
 
-import io.tanners.tax.ITaxCalculator;
 import io.tanners.tax.TaxCalculator;
 import io.tanners.tax.exception.ValueIsNegativeException;
 
 import java.util.ArrayList;
 
-//public class SalesTaxCalculator<SalesTaxData>  extends TaxCalculator<SalesTaxData> {
-public class SalesTaxCalculator  implements ITaxCalculator<SalesTaxData> {
+public class SalesTaxCalculator extends TaxCalculator<SalesTaxData>{
 
     @Override
     public Double calculateTax(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
         validationCheck(mTaxInfo);
-        return mTaxInfo.getmPrice() * mTaxInfo.getmTaxPercentage().getValue();
+        return mTaxInfo.getmPrice() * mTaxInfo.getmTaxPercentage().getValue() * mTaxInfo.getmQuantity();
     }
 
     @Override
     public Double calculateTotal(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
         validationCheck(mTaxInfo);
-        return mTaxInfo.getmPrice() * (1.0 + mTaxInfo.getmTaxPercentage().getValue());
+        return mTaxInfo.getmPrice() * (1.0 + mTaxInfo.getmTaxPercentage().getValue() * mTaxInfo.getmQuantity());
     }
 
     @Override
-    public ArrayList<Double> calculateTaxes(ArrayList<SalesTaxData> mTaxInfo) throws ValueIsNegativeException {
-        throw new UnsupportedOperationException("Must be implemented");
+    public Double calculateTaxes(SalesTaxData[] mTaxInfo) throws ValueIsNegativeException {
+        double mTaxesTotal = 0.0;
+
+        for(SalesTaxData mData : mTaxInfo) {
+            mTaxesTotal += calculateTax(mData);
+        }
+
+        return mTaxesTotal;
     }
 
     @Override
-    public ArrayList<Double> calculateTotals(ArrayList<SalesTaxData> mTaxInfo) throws ValueIsNegativeException {
-        throw new UnsupportedOperationException("Must be implemented");
+    public Double calculateTotals(SalesTaxData[] mTaxInfo) throws ValueIsNegativeException {
+        double mTotal = 0.0;
+
+        for(SalesTaxData mData : mTaxInfo) {
+            mTotal += calculateTotal(mData);
+        }
+
+        return mTotal;
     }
 
     private void validationCheck(SalesTaxData mTaxInfo) throws ValueIsNegativeException {
