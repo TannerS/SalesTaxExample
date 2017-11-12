@@ -1,5 +1,4 @@
-package io.tanners.tax.sales;
-
+package io.tanners.tax.exception;
 /**
  * A custom exception for negative values
  */

@@ -1,10 +1,13 @@
 package io.tanners.tax.sales;
 
+import io.tanners.tax.ITaxCalculator;
 import io.tanners.tax.TaxCalculator;
+import io.tanners.tax.exception.ValueIsNegativeException;
 
 import java.util.ArrayList;
 
-public class SalesTaxCalculator extends TaxCalculator<SalesTaxData> {
+//public class SalesTaxCalculator<SalesTaxData>  extends TaxCalculator<SalesTaxData> {
+public class SalesTaxCalculator  implements ITaxCalculator<SalesTaxData> {
 
     @Override
     public Double calculateTax(SalesTaxData mTaxInfo) throws ValueIsNegativeException {

@@ -1,4 +1,4 @@
-package io.tanners.tax.sales;//package io.tanners.tax.sales;
+package io.tanners.tax.exception;//package io.tanners.tax.sales;
 
 /**
  * A custom exception for empty array values

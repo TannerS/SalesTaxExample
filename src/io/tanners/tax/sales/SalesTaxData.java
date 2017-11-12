@@ -1,36 +1,15 @@
 package io.tanners.tax.sales;
 
-public class SalesTaxData
+import io.tanners.tax.TaxData;
+import io.tanners.tax.exception.ValueIsNegativeException;
+
+/**
+ * Data class to hold the information about an item with it's tax information for later use
+ */
+public class SalesTaxData extends TaxData
 {
-    private int mQuantity;
-    private String mItem;
-    private double mPrice;
-    private boolean mIsImported;
+    protected boolean mIsImported;
     private SalesTax mTaxPercentage;
-
-    public int getmQuantity() {
-        return mQuantity;
-    }
-
-    public void setmQuantity(int mQuantity) {
-        this.mQuantity = mQuantity;
-    }
-
-    public String getmItem() {
-        return mItem;
-    }
-
-    public void setmItem(String mItem) {
-        this.mItem = mItem;
-    }
-
-    public double getmPrice() {
-        return mPrice;
-    }
-
-    public void setmPrice(double mPrice) {
-        this.mPrice = mPrice;
-    }
 
     public boolean ismIsImported() {
         return mIsImported;
@@ -45,6 +24,45 @@ public class SalesTaxData
     }
 
     public void setmTaxPercentage(SalesTax mTaxPercentage) {
-        this.mTaxPercentage = mTaxPercentage;
+        if(mTaxPercentage == null)
+            throw new NullPointerException();
+        else
+            this.mTaxPercentage = mTaxPercentage;
+    }
+
+    @Override
+    public int getmQuantity() {
+        return mQuantity;
+    }
+
+    @Override
+    public void setmQuantity(int mQuantity) throws ValueIsNegativeException {
+        if(mQuantity < 0)
+            throw new ValueIsNegativeException(ValueIsNegativeException.NEGATIVE);
+        else
+            this.mQuantity = mQuantity;
+    }
+
+    @Override
+    public String getmItem() {
+        return mItem;
+    }
+
+    @Override
+    public void setmItem(String mItem) {
+        this.mItem = mItem;
+    }
+
+    @Override
+    public double getmPrice() {
+        return mPrice;
+    }
+
+    @Override
+    public void setmPrice(double mPrice) throws ValueIsNegativeException {
+        if(mPrice < 0)
+            throw new ValueIsNegativeException(ValueIsNegativeException.NEGATIVE);
+        else
+            this.mPrice = mPrice;
     }
 }
